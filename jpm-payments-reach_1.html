@@ -31,26 +31,31 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    background:
-      radial-gradient(1200px 600px at 50% -10%, #F7F2EA 0%, var(--parchment) 60%);
+    background-color:var(--parchment);
+    background-image:
+      radial-gradient(1200px 620px at 50% -12%, #F8F3EB 0%, rgba(241,235,225,0) 62%),
+      radial-gradient(circle at 1px 1px, rgba(74,53,36,.045) 1px, transparent 1.4px);
+    background-size:auto, 23px 23px;
     color:var(--ink);
     font-family:var(--sans);
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
+  :focus:not(:focus-visible){outline:none;}
 
   /* ---- top tachometer bar ---- */
   .tach{position:fixed; top:0; left:0; right:0; height:34px; z-index:20;
-    background:linear-gradient(var(--parchment), rgba(241,235,225,0));
+    background:linear-gradient(var(--parchment) 55%, rgba(241,235,225,0));
     display:flex; align-items:center; gap:12px; padding:0 16px;}
   .tach .track{position:relative; flex:1; height:3px; background:var(--hairline-2); border-radius:2px; overflow:hidden;}
-  .tach .fill{position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg,var(--bronze),var(--engine)); transition:width .5s cubic-bezier(.2,.7,.2,1);}
+  .tach .fill{position:absolute; inset:0 auto 0 0; width:0%; background:linear-gradient(90deg,var(--bronze),var(--engine)); transition:width .55s cubic-bezier(.2,.7,.2,1);}
+  .tach .fill::after{content:""; position:absolute; right:0; top:0; bottom:0; width:14px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.7)); }
   .tach .ticks{position:absolute; inset:0; display:flex; justify-content:space-between;}
   .tach .ticks span{width:1px; background:var(--parchment);}
-  .tach .stage-label{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--taupe); white-space:nowrap;}
+  .tach .stage-label{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--taupe); white-space:nowrap; min-width:56px;}
 
-  .wrap{max-width:1080px; margin:0 auto; padding:72px 22px 88px;}
+  .wrap{max-width:1080px; margin:0 auto; padding:72px 22px 92px;}
 
   .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--bronze); display:flex; align-items:center; gap:10px;}
   .eyebrow::before{content:""; width:26px; height:1px; background:var(--bronze); display:inline-block;}
@@ -67,48 +72,70 @@
 
   .door{position:relative; text-align:left; cursor:pointer; background:var(--panel);
     border:1px solid var(--hairline); border-radius:3px; padding:26px 22px 22px;
-    display:flex; flex-direction:column; min-height:250px; overflow:hidden;
-    transition:transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .3s;}
-  .door::after{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); transform:scaleY(0); transform-origin:top; transition:transform .3s;}
-  .door:hover{transform:translateY(-5px); box-shadow:0 18px 40px -24px rgba(74,53,36,.45); border-color:var(--hairline-2);}
+    display:flex; flex-direction:column; min-height:252px; overflow:hidden; font-family:inherit;
+    transition:transform .32s cubic-bezier(.2,.7,.2,1), box-shadow .32s, border-color .32s;}
+  .door::before{content:""; position:absolute; left:0; right:0; top:0; height:2px; background:var(--accent); opacity:.28;}
+  .door::after{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--accent); transform:scaleY(0); transform-origin:top; transition:transform .32s;}
+  .door:hover{transform:translateY(-6px); box-shadow:0 20px 44px -26px rgba(74,53,36,.5); border-color:var(--hairline-2);}
   .door:hover::after{transform:scaleY(1);}
   .door:focus-visible{outline:2px solid var(--bronze); outline-offset:3px;}
   .door .icon{width:52px; height:52px; color:var(--accent); margin-bottom:20px;}
+  .door:hover .icon .spin{transform-box:fill-box; transform-origin:center; animation:spin 5s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
   .door .num{position:absolute; top:20px; right:20px; font-family:var(--mono); font-size:11px; color:var(--hairline-2); letter-spacing:.1em;}
   .door .role{font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--taupe); margin-bottom:8px;}
   .door h3{font-family:var(--serif); font-weight:500; font-size:23px; color:var(--brown); margin-bottom:9px; line-height:1.15;}
   .door p{color:var(--taupe); font-size:14px; line-height:1.55; flex-grow:1;}
   .door .enter{margin-top:16px; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--brown); display:flex; align-items:center; gap:7px;}
   .door .enter .arw{transition:transform .25s;}
-  .door:hover .enter .arw{transform:translateX(5px);}
+  .door:hover .enter .arw{transform:translateX(6px);}
 
-  .hub-hint{margin-top:34px; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--taupe); display:flex; align-items:center; gap:8px;}
+  .hub-hint{margin-top:34px; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--taupe); display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+  .hub-hint kbd{font-family:var(--mono); font-size:10px; background:var(--panel); border:1px solid var(--hairline-2); border-bottom-width:2px; border-radius:3px; padding:2px 6px; color:var(--brown);}
 
   /* ========== PATH ========== */
   .path{display:none;}
-  .path.active{display:block; animation:rise .5s cubic-bezier(.2,.7,.2,1);}
-  @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  .path.active{display:block; animation:fade .32s ease both;}
+  @keyframes fade{from{opacity:0;} to{opacity:1;}}
+  @keyframes cardIn{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
 
-  .backbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:26px; gap:14px; flex-wrap:wrap;}
+  .backbar{display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; gap:14px; flex-wrap:wrap;}
   .back{background:none; border:none; cursor:pointer; font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; color:var(--taupe); display:flex; align-items:center; gap:7px; padding:6px 0;}
   .back:hover{color:var(--brown);}
-  .lane-tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; padding:6px 12px; border-radius:2px; border:1px solid var(--accent); color:var(--accent); background:color-mix(in srgb, var(--accent) 8%, transparent);}
+  .back:focus-visible{outline:2px solid var(--bronze); outline-offset:3px; border-radius:2px;}
 
-  .path-hero{display:grid; grid-template-columns:auto 1fr; gap:26px; align-items:start; padding-bottom:30px; border-bottom:1px solid var(--hairline); margin-bottom:30px;}
-  @media(max-width:640px){ .path-hero{grid-template-columns:1fr; gap:16px;} }
-  .path-hero .bigicon{width:96px; height:96px; color:var(--accent);}
-  @media(max-width:640px){ .path-hero .bigicon{width:64px; height:64px;} }
-  .path-hero h2{font-family:var(--serif); font-weight:500; font-size:clamp(26px,3.8vw,42px); line-height:1.08; color:var(--brown); letter-spacing:-.01em;}
+  /* lane switcher */
+  .laneswitch{display:flex; gap:6px;}
+  .laneswitch button{font-family:var(--mono); font-size:11px; letter-spacing:.1em; cursor:pointer; padding:7px 12px; border-radius:2px; background:var(--panel); border:1px solid var(--hairline-2); color:var(--taupe); transition:all .2s; line-height:1;}
+  .laneswitch button:hover{color:var(--brown); border-color:var(--ls-accent); }
+  .laneswitch button[aria-current="true"]{background:var(--ls-accent); border-color:var(--ls-accent); color:#F6EFE4;}
+  .laneswitch button:focus-visible{outline:2px solid var(--bronze); outline-offset:2px;}
+
+  .path-hero{display:grid; grid-template-columns:auto 1fr; gap:26px; align-items:center; padding-bottom:30px; border-bottom:1px solid var(--hairline); margin-bottom:26px; animation:cardIn .5s .02s both;}
+  @media(max-width:640px){ .path-hero{grid-template-columns:1fr; gap:14px; align-items:start;} }
+  .path-hero .bigicon{width:104px; height:104px; color:var(--accent);}
+  @media(max-width:640px){ .path-hero .bigicon{width:66px; height:66px;} }
+  .path-hero h2{font-family:var(--serif); font-weight:500; font-size:clamp(26px,3.8vw,42px); line-height:1.08; color:var(--brown); letter-spacing:-.01em; outline:none;}
   .path-hero .psub{color:var(--taupe); font-size:15.5px; line-height:1.55; margin-top:12px; max-width:600px;}
 
   .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
   @media(max-width:720px){ .grid{grid-template-columns:1fr;} }
+  .path.active .grid>*{animation:cardIn .5s both;}
+  .path.active .grid>*:nth-child(1){animation-delay:.08s;}
+  .path.active .grid>*:nth-child(2){animation-delay:.15s;}
+  .path.active .grid>*:nth-child(3){animation-delay:.22s;}
+  .path.active .grid>*:nth-child(4){animation-delay:.29s;}
 
-  .card{background:var(--panel); border:1px solid var(--hairline); border-radius:3px; padding:22px 22px 20px; position:relative;}
+  .card{background:var(--panel); border:1px solid var(--hairline); border-radius:3px; padding:22px 22px 20px; position:relative; overflow:hidden;}
   .card .clabel{font-family:var(--mono); font-size:10.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--taupe); display:flex; align-items:center; gap:8px; margin-bottom:12px;}
-  .card .clabel::before{content:""; width:14px; height:14px; border:1.5px solid var(--accent); border-radius:50%; flex:none; position:relative;}
+  .card .clabel::before{content:""; width:13px; height:13px; border:1.5px solid var(--accent); border-radius:50%; flex:none;}
   .card h4{font-family:var(--serif); font-weight:500; font-size:18px; color:var(--brown); margin-bottom:8px; line-height:1.25;}
-  .card p{color:#5a4c3d; font-size:14.5px; line-height:1.62;}
+  .card p{color:#5a4c3d; font-size:14.5px; line-height:1.62; position:relative; z-index:1;}
+
+  /* gauge-tick corner detail on the shorter cards */
+  .card.deco::after{content:""; position:absolute; right:16px; bottom:14px; width:110px; height:18px; opacity:.16; z-index:0;
+    background:repeating-linear-gradient(90deg, var(--accent) 0 1.5px, transparent 1.5px 11px);
+    -webkit-mask:linear-gradient(90deg, transparent, #000 55%); mask:linear-gradient(90deg, transparent, #000 55%);}
 
   .card.key{border-left:3px solid var(--accent); background:var(--panel-2);}
   .chips{list-style:none; margin-top:14px; display:flex; flex-direction:column; gap:9px;}
@@ -118,8 +145,9 @@
 
   /* nameplate — "in this seat" */
   .seat{grid-column:1/-1; margin-top:2px; background:linear-gradient(180deg,var(--panel),var(--panel-2));
-    border:1px solid var(--hairline-2); border-radius:4px; padding:22px 24px; position:relative; overflow:hidden;}
+    border:1px solid var(--hairline-2); border-radius:4px; padding:22px 24px 22px 28px; position:relative; overflow:hidden;}
   .seat::before{content:""; position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--accent);}
+  .seat::after{content:""; position:absolute; left:14px; top:14px; width:5px; height:5px; border-radius:50%; background:var(--hairline-2); box-shadow:0 calc(100% - 42px) 0 var(--hairline-2);}
   .seat .plate{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap; margin-bottom:10px;}
   .seat .co{font-family:var(--serif); font-weight:600; font-size:22px; color:var(--brown); letter-spacing:-.01em;}
   .seat .stamp{font-family:var(--mono); font-size:9.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--taupe); border:1px solid var(--hairline-2); border-radius:2px; padding:5px 9px;}
@@ -128,29 +156,31 @@
 
   /* ========== CONVERGE ========== */
   #converge{display:none;}
-  #converge.active{display:block; animation:rise .55s cubic-bezier(.2,.7,.2,1);}
+  #converge.active{display:block; animation:fade .4s ease both;}
   #converge h1{margin-top:14px;}
   .converge-lede{max-width:720px;}
-  .diagram{margin:44px auto 8px; max-width:760px;}
+  .diagram{margin:40px auto 8px; max-width:760px; animation:cardIn .6s .1s both;}
   .diagram svg{width:100%; height:auto; display:block;}
-  .closing{max-width:680px; margin:36px auto 0; padding-top:26px; border-top:1px solid var(--hairline); color:#5a4c3d; font-size:16px; line-height:1.7; text-align:left;}
+  .flowline{stroke-dasharray:6 7; animation:march 1.15s linear infinite;}
+  @keyframes march{to{stroke-dashoffset:-13;}}
+  .closing{max-width:680px; margin:34px auto 0; padding-top:26px; border-top:1px solid var(--hairline); color:#5a4c3d; font-size:16px; line-height:1.7; text-align:left; animation:cardIn .6s .2s both;}
   .closing b{color:var(--brown); font-weight:600;}
 
   .btnrow{margin-top:34px; display:flex; gap:12px; flex-wrap:wrap;}
   .btn{font-family:var(--mono); font-size:12px; letter-spacing:.05em; padding:13px 20px; border-radius:2px; cursor:pointer; border:1px solid var(--hairline-2); background:var(--panel); color:var(--brown); transition:all .22s;}
-  .btn:hover{border-color:var(--bronze); color:var(--bronze);}
+  .btn:hover{border-color:var(--bronze); color:var(--bronze); transform:translateY(-1px);}
   .btn.primary{background:var(--brown); color:#F6EFE4; border-color:var(--brown);}
   .btn.primary:hover{background:var(--bronze); border-color:var(--bronze); color:#fff;}
   .btn:focus-visible{outline:2px solid var(--bronze); outline-offset:2px;}
   #converge .btnrow{justify-content:center;}
 
+  .draw{stroke-dasharray:620; stroke-dashoffset:620; animation:draw 1.15s ease forwards;}
+  @keyframes draw{to{stroke-dashoffset:0;}}
+
   @media(prefers-reduced-motion:reduce){
-    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+    *{animation:none !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
     .draw{stroke-dasharray:none !important; stroke-dashoffset:0 !important;}
   }
-
-  .draw{stroke-dasharray:600; stroke-dashoffset:600; animation:draw 1.1s ease forwards;}
-  @keyframes draw{to{stroke-dashoffset:0;}}
 </style>
 </head>
 <body>
@@ -175,7 +205,7 @@
       <span class="num">01</span>
       <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="10" y="28" width="34" height="22" rx="2"/><rect x="16" y="18" width="8" height="10" rx="1"/><rect x="28" y="18" width="8" height="10" rx="1"/>
-        <path d="M44 34h6l4 4v6h-10"/><circle cx="49" cy="41" r="1.6" fill="currentColor" stroke="none"/>
+        <path d="M44 34h6l4 4v6h-10"/><g class="spin"><circle cx="49" cy="41" r="1.8" fill="currentColor" stroke="none"/></g>
         <path d="M10 44H5"/><path d="M16 50v4"/><path d="M34 50v4"/>
       </svg>
       <span class="role">Developer</span>
@@ -188,8 +218,8 @@
       <span class="num">02</span>
       <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M12 44a20 20 0 0 1 40 0"/>
-        <path d="M32 44l11-11"/><circle cx="32" cy="44" r="2.4" fill="currentColor" stroke="none"/>
-        <path d="M12 44h3M49 44h3M16.5 30.5l2 2M47.5 30.5l-2 2M32 22v3"/>
+        <path d="M32 44l11-10"/><circle cx="32" cy="44" r="2.6" fill="currentColor" stroke="none"/>
+        <path d="M12 44h3.5M48.5 44H52M15.5 32l2.4 2.4M48.5 32l-2.4 2.4M32 21.5V25"/>
       </svg>
       <span class="role">Treasurer</span>
       <h3>Runs the desk</h3>
@@ -210,30 +240,34 @@
     </button>
   </div>
 
-  <div class="hub-hint">▸ Select a lane to begin the walkthrough</div>
+  <div class="hub-hint">▸ Select a lane to begin &nbsp;·&nbsp; navigate with <kbd>←</kbd> <kbd>→</kbd> &nbsp;·&nbsp; <kbd>Esc</kbd> returns here</div>
 </section>
 
 <!-- ================= PATH: API ================= -->
 <section id="path-api" class="path wrap" style="--accent:var(--engine)">
   <div class="backbar">
-    <button class="back" onclick="goHub()">← Back to the three doors</button>
-    <span class="lane-tag">Lane 01 · Developer</span>
+    <button class="back" onclick="go('hub')">← Back to the three doors</button>
+    <div class="laneswitch" data-switch>
+      <button data-path="api" aria-label="Lane 1, Developer">01</button>
+      <button data-path="access" aria-label="Lane 2, Treasurer">02</button>
+      <button data-path="erp" aria-label="Lane 3, Treasurer">03</button>
+    </div>
   </div>
 
   <div class="path-hero">
     <svg class="bigicon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <rect class="draw" x="10" y="28" width="34" height="22" rx="2"/><rect x="16" y="18" width="8" height="10" rx="1"/><rect x="28" y="18" width="8" height="10" rx="1"/>
-      <path d="M44 34h6l4 4v6h-10"/><circle cx="49" cy="41" r="1.6" fill="currentColor" stroke="none"/>
+      <path d="M44 34h6l4 4v6h-10"/><circle cx="49" cy="41" r="1.8" fill="currentColor" stroke="none"/>
       <path d="M10 44H5"/><path d="M16 50v4"/><path d="M34 50v4"/>
     </svg>
     <div>
-      <h2>The builder who wants the engine, not the dashboard</h2>
+      <h2 tabindex="-1">The builder who wants the engine, not the dashboard</h2>
       <p class="psub">Fintechs, marketplaces, and enterprise engineering teams embedding payments into their own software.</p>
     </div>
   </div>
 
   <div class="grid">
-    <div class="card">
+    <div class="card deco">
       <div class="clabel">Speedbumps</div>
       <p>They don't want our interface — they want our engine. A developer's job is the product experience their company sells, not learning a bank's screens. If payments and data can't be called in code and tested on their own timeline, the integration stalls before it reaches a sprint.</p>
     </div>
@@ -248,7 +282,7 @@
       </ul>
     </div>
 
-    <div class="card" style="grid-column:1/-1">
+    <div class="card deco" style="grid-column:1/-1">
       <div class="clabel">Why this lane matters</div>
       <p>Speed — and it's still their product. They ship on their own release cycle, in their own UI, with our rails invisible underneath. That's the pitch to a developer: we disappear into the thing they're building, instead of asking them to build around us.</p>
     </div>
@@ -264,32 +298,36 @@
   </div>
 
   <div class="btnrow">
-    <button class="btn primary" onclick="goConverge()">See how the three lanes connect →</button>
-    <button class="btn" onclick="goHub()">Choose a different door</button>
+    <button class="btn primary" onclick="go('converge')">See how the three lanes connect →</button>
+    <button class="btn" onclick="go('hub')">Choose a different door</button>
   </div>
 </section>
 
 <!-- ================= PATH: ACCESS ================= -->
 <section id="path-access" class="path wrap" style="--accent:var(--gauge)">
   <div class="backbar">
-    <button class="back" onclick="goHub()">← Back to the three doors</button>
-    <span class="lane-tag">Lane 02 · Treasurer</span>
+    <button class="back" onclick="go('hub')">← Back to the three doors</button>
+    <div class="laneswitch" data-switch>
+      <button data-path="api" aria-label="Lane 1, Developer">01</button>
+      <button data-path="access" aria-label="Lane 2, Treasurer">02</button>
+      <button data-path="erp" aria-label="Lane 3, Treasurer">03</button>
+    </div>
   </div>
 
   <div class="path-hero">
     <svg class="bigicon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path class="draw" d="M12 44a20 20 0 0 1 40 0"/>
-      <path d="M32 44l11-11"/><circle cx="32" cy="44" r="2.6" fill="currentColor" stroke="none"/>
-      <path d="M12 44h3M49 44h3M16.5 30.5l2 2M47.5 30.5l-2 2M32 22v3"/>
+      <path d="M32 44l11-10"/><circle cx="32" cy="44" r="2.8" fill="currentColor" stroke="none"/>
+      <path d="M12 44h3.5M48.5 44H52M15.5 32l2.4 2.4M48.5 32l-2.4 2.4M32 21.5V25"/>
     </svg>
     <div>
-      <h2>The driver who needs the dashboard, not the engine</h2>
+      <h2 tabindex="-1">The driver who needs the dashboard, not the engine</h2>
       <p class="psub">Corporate treasurers and controllers responsible for liquidity, cash visibility, and reporting across markets.</p>
     </div>
   </div>
 
   <div class="grid">
-    <div class="card">
+    <div class="card deco">
       <div class="clabel">Speedbumps</div>
       <p>Cash is scattered across banks, currencies, and time zones. A treasurer's real enemy is fragmentation — dozens of accounts, multiple portals, and stale end-of-day balances when a same-day FX or liquidity decision is on the table.</p>
     </div>
@@ -305,7 +343,7 @@
       </ul>
     </div>
 
-    <div class="card" style="grid-column:1/-1">
+    <div class="card deco" style="grid-column:1/-1">
       <div class="clabel">Why this lane matters</div>
       <p>Control, without adding technical headcount. Simplicity to log in, do your work, and head home.</p>
     </div>
@@ -321,16 +359,20 @@
   </div>
 
   <div class="btnrow">
-    <button class="btn primary" onclick="goConverge()">See how the three lanes connect →</button>
-    <button class="btn" onclick="goHub()">Choose a different door</button>
+    <button class="btn primary" onclick="go('converge')">See how the three lanes connect →</button>
+    <button class="btn" onclick="go('hub')">Choose a different door</button>
   </div>
 </section>
 
 <!-- ================= PATH: ERP ================= -->
 <section id="path-erp" class="path wrap" style="--accent:var(--wheel)">
   <div class="backbar">
-    <button class="back" onclick="goHub()">← Back to the three doors</button>
-    <span class="lane-tag">Lane 03 · Treasurer / Controller</span>
+    <button class="back" onclick="go('hub')">← Back to the three doors</button>
+    <div class="laneswitch" data-switch>
+      <button data-path="api" aria-label="Lane 1, Developer">01</button>
+      <button data-path="access" aria-label="Lane 2, Treasurer">02</button>
+      <button data-path="erp" aria-label="Lane 3, Treasurer">03</button>
+    </div>
   </div>
 
   <div class="path-hero">
@@ -339,13 +381,13 @@
       <path d="M32 26V13"/><path d="M27 37l-11 8"/><path d="M37 37l11 8"/>
     </svg>
     <div>
-      <h2>The driver who never leaves the seat</h2>
+      <h2 tabindex="-1">The driver who never leaves the seat</h2>
       <p class="psub">Treasury, HR, and Ops teams running Oracle or SAP as their company's system of record — the brain that powers their business.</p>
     </div>
   </div>
 
   <div class="grid">
-    <div class="card">
+    <div class="card deco">
       <div class="clabel">Speedbumps</div>
       <p>An enterprise runs on fragmented systems — separate tools for procurement, payables, payroll, and cash that don't talk to each other. An ERP bundles all of that into one system of record, so the whole business operates from a single source of truth.</p>
     </div>
@@ -361,7 +403,7 @@
       </ul>
     </div>
 
-    <div class="card" style="grid-column:1/-1">
+    <div class="card deco" style="grid-column:1/-1">
       <div class="clabel">Why this lane matters</div>
       <p>Adoption without a change-management project. Nobody has to learn a new tool. Treasury keeps working where they already work, and the bank becomes infrastructure instead of one more login to train the team on.</p>
     </div>
@@ -377,23 +419,23 @@
   </div>
 
   <div class="btnrow">
-    <button class="btn primary" onclick="goConverge()">See how the three lanes connect →</button>
-    <button class="btn" onclick="goHub()">Choose a different door</button>
+    <button class="btn primary" onclick="go('converge')">See how the three lanes connect →</button>
+    <button class="btn" onclick="go('hub')">Choose a different door</button>
   </div>
 </section>
 
 <!-- ================= CONVERGE ================= -->
 <section id="converge" class="wrap">
   <div class="eyebrow">The point for leadership</div>
-  <h1>Three doors.<br><em>One</em> engine.</h1>
+  <h1 tabindex="-1">Three doors.<br><em>One</em> engine.</h1>
   <p class="lede converge-lede">The developer on the Developer Portal, the treasurer on Access, and the treasurer inside the ERP touch three genuinely different connection points — they never see each other's screen. What they share is what's running underneath: the same payment rails, the same account data, the same core engine.</p>
 
   <div class="diagram">
     <svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" fill="none">
-      <!-- converging lines -->
-      <path d="M120 96 C 190 220 300 300 372 344" stroke="#B0632E" stroke-width="1.6" stroke-dasharray="5 5" opacity=".65"/>
-      <path d="M380 96 L380 344" stroke="#937A2E" stroke-width="1.6" stroke-dasharray="5 5" opacity=".65"/>
-      <path d="M640 96 C 570 220 460 300 388 344" stroke="#6B4326" stroke-width="1.6" stroke-dasharray="5 5" opacity=".65"/>
+      <!-- converging flow lines (animated toward the engine) -->
+      <path class="flowline" d="M120 96 C 190 220 300 300 372 344" stroke="#B0632E" stroke-width="1.8" opacity=".7"/>
+      <path class="flowline" d="M380 96 L380 344" stroke="#937A2E" stroke-width="1.8" opacity=".7"/>
+      <path class="flowline" d="M640 96 C 570 220 460 300 388 344" stroke="#6B4326" stroke-width="1.8" opacity=".7"/>
 
       <!-- node: API -->
       <g stroke="#B0632E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -404,7 +446,7 @@
 
       <!-- node: Access -->
       <g stroke="#937A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M366 56a14 14 0 0 1 28 0"/><path d="M380 56l8-8"/>
+        <path d="M366 56a14 14 0 0 1 28 0"/><path d="M380 56l7-7"/>
       </g>
       <circle cx="380" cy="90" r="4" fill="#937A2E"/>
       <text x="380" y="82" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" letter-spacing="1" fill="#8A7A67">TREASURER · ACCESS</text>
@@ -418,58 +460,104 @@
 
       <!-- core engine -->
       <rect x="250" y="344" width="260" height="72" rx="5" fill="#FBF8F3" stroke="#A0662F" stroke-width="1.5"/>
-      <g transform="translate(288,362)" stroke="#A0662F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <g transform="translate(286,362)" stroke="#A0662F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="0" y="12" width="26" height="16" rx="2"/><rect x="5" y="4" width="6" height="8" rx="1"/><rect x="14" y="4" width="6" height="8" rx="1"/><path d="M26 17h5l3 3v5h-8"/>
       </g>
-      <text x="405" y="382" text-anchor="middle" font-family="'Newsreader',serif" font-size="19" font-weight="500" fill="#4A3524">J.P. Morgan Payments</text>
-      <text x="405" y="400" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10.5" letter-spacing="1.5" fill="#8A7A67">ONE ENGINE · RAILS · ACCOUNTS · DATA</text>
+      <text x="406" y="382" text-anchor="middle" font-family="'Newsreader',serif" font-size="19" font-weight="500" fill="#4A3524">J.P. Morgan Payments</text>
+      <text x="406" y="400" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10.5" letter-spacing="1.5" fill="#8A7A67">ONE ENGINE · RAILS · ACCOUNTS · DATA</text>
     </svg>
   </div>
 
   <p class="closing"><b>The pitch to leadership isn't "one platform for everyone."</b> It's "one engine, three front doors" — Access, the Developer Portal, and native ERP/TMS integrations are each purpose-built for how that persona already works, so the client never has to adapt to us. Competitors running siloed banking, API, and integration teams end up building three disconnected products instead of three doors onto one engine.</p>
 
   <div class="btnrow">
-    <button class="btn primary" onclick="goHub()">← Start over from the three doors</button>
+    <button class="btn primary" onclick="go('hub')">← Start over from the three doors</button>
   </div>
 </section>
 
 <script>
-  var sections = {
+  var S = {
     hub: document.getElementById('hub'),
     api: document.getElementById('path-api'),
     access: document.getElementById('path-access'),
     erp: document.getElementById('path-erp'),
     converge: document.getElementById('converge')
   };
+  var order = ['api','access','erp'];
   var tachFill = document.getElementById('tachFill');
   var stageLabel = document.getElementById('stageLabel');
+  var current = 'hub';
 
-  function hideAll(){
-    sections.hub.style.display='none';
-    sections.api.classList.remove('active');
-    sections.access.classList.remove('active');
-    sections.erp.classList.remove('active');
-    sections.converge.classList.remove('active');
-  }
-  function setTach(pct, label){ tachFill.style.width = pct+'%'; stageLabel.textContent = label; }
-  function reveal(){ // re-trigger draw animation on the icons in the active view
-    document.querySelectorAll('.path.active .draw, #converge.active .draw').forEach(function(el){
-      el.style.animation='none'; void el.offsetWidth; el.style.animation='';
+  function render(view){
+    current = view;
+    S.hub.style.display = (view==='hub') ? 'block' : 'none';
+    S.api.classList.toggle('active', view==='api');
+    S.access.classList.toggle('active', view==='access');
+    S.erp.classList.toggle('active', view==='erp');
+    S.converge.classList.toggle('active', view==='converge');
+
+    var pct = 4, label = 'Idle';
+    if(view==='api'){ pct=58; label='Lane 01'; }
+    else if(view==='access'){ pct=58; label='Lane 02'; }
+    else if(view==='erp'){ pct=58; label='Lane 03'; }
+    else if(view==='converge'){ pct=100; label='Redline'; }
+    tachFill.style.width = pct+'%';
+    stageLabel.textContent = label;
+
+    // sync lane switcher active state
+    document.querySelectorAll('.laneswitch').forEach(function(sw){
+      sw.querySelectorAll('button').forEach(function(b){
+        var on = b.dataset.path===view;
+        b.setAttribute('aria-current', on ? 'true':'false');
+        b.style.setProperty('--ls-accent', b.dataset.path==='api'?'var(--engine)':b.dataset.path==='access'?'var(--gauge)':'var(--wheel)');
+      });
     });
-  }
-  function goHub(){ hideAll(); sections.hub.style.display='block'; setTach(4,'Idle'); window.scrollTo({top:0}); }
-  function goPath(name){
-    hideAll();
-    var map = {api:sections.api, access:sections.access, erp:sections.erp};
-    map[name].classList.add('active');
-    setTach(58, 'Lane ' + (name==='api'?'01':name==='access'?'02':'03'));
-    window.scrollTo({top:0}); reveal();
-  }
-  function goConverge(){ hideAll(); sections.converge.classList.add('active'); setTach(100,'Redline'); window.scrollTo({top:0}); reveal(); }
 
+    // re-trigger icon draw + card stagger
+    document.querySelectorAll('.active .draw').forEach(function(el){ el.style.animation='none'; void el.offsetWidth; el.style.animation=''; });
+
+    // focus target heading for a11y (no scroll jump handled below)
+    window.scrollTo({top:0, behavior:'auto'});
+    var h = document.querySelector(view==='converge' ? '#converge h1' : '#path-'+view+' h2');
+    if(h){ try{ h.focus({preventScroll:true}); }catch(e){ h.focus(); } }
+  }
+
+  function go(view){
+    if(('#'+view) === location.hash){ render(view); }
+    else { location.hash = view; }   // triggers hashchange -> render
+  }
+  function routeFromHash(){
+    var v = (location.hash || '#hub').slice(1);
+    if(!S[v]) v='hub';
+    render(v);
+  }
+  window.addEventListener('hashchange', routeFromHash);
+
+  // door + lane-switch clicks
   document.querySelectorAll('.door').forEach(function(d){
-    d.addEventListener('click', function(){ goPath(d.dataset.path); });
+    d.addEventListener('click', function(){ go(d.dataset.path); });
   });
+  document.querySelectorAll('.laneswitch button').forEach(function(b){
+    b.addEventListener('click', function(){ go(b.dataset.path); });
+  });
+
+  // keyboard navigation
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape'){ if(current!=='hub') go('hub'); return; }
+    if(e.key==='ArrowRight' || e.key==='ArrowLeft'){
+      var idx = order.indexOf(current);
+      if(current==='hub'){ go(e.key==='ArrowRight' ? 'api' : 'erp'); return; }
+      if(current==='converge'){ if(e.key==='ArrowLeft') go('erp'); return; }
+      if(idx>-1){
+        var next = e.key==='ArrowRight' ? idx+1 : idx-1;
+        if(next>=order.length){ go('converge'); }
+        else if(next<0){ go('hub'); }
+        else { go(order[next]); }
+      }
+    }
+  });
+
+  routeFromHash();
 </script>
 </body>
 </html>
