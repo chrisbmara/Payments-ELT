@@ -166,6 +166,24 @@
   .closing{max-width:680px; margin:34px auto 0; padding-top:26px; border-top:1px solid var(--hairline); color:#5a4c3d; font-size:16px; line-height:1.7; text-align:left; animation:cardIn .6s .2s both;}
   .closing b{color:var(--brown); font-weight:600;}
 
+  /* Q&A recap */
+  .qa{max-width:720px; margin:34px auto 0; padding-top:26px; border-top:1px solid var(--hairline); animation:cardIn .6s .2s both;}
+  .qa .eyebrow{color:var(--bronze);}
+  .qa-item{border:1px solid var(--hairline); border-radius:3px; background:var(--panel); margin-bottom:10px; overflow:hidden; transition:border-color .25s;}
+  .qa-item.open{border-color:var(--hairline-2); background:var(--panel-2);}
+  .qa-q{width:100%; display:flex; align-items:center; gap:14px; text-align:left; cursor:pointer; background:none; border:none; font-family:inherit; padding:18px 20px; color:var(--brown);}
+  .qa-q:focus-visible{outline:2px solid var(--bronze); outline-offset:-2px;}
+  .qa-q .qn{font-family:var(--mono); font-size:11px; letter-spacing:.1em; color:var(--bronze); flex:none;}
+  .qa-q .qtext{font-family:var(--serif); font-size:clamp(16px,2vw,19px); font-weight:500; line-height:1.3; flex:1;}
+  .qa-q .qtoggle{font-family:var(--mono); font-size:20px; color:var(--taupe); flex:none; transition:transform .3s ease; line-height:1;}
+  .qa-item.open .qa-q .qtoggle{transform:rotate(45deg); color:var(--bronze);}
+  .qa-a{display:grid; grid-template-rows:0fr; transition:grid-template-rows .32s ease;}
+  .qa-item.open .qa-a{grid-template-rows:1fr;}
+  .qa-a-in{overflow:hidden;}
+  .qa-a-in p{color:#5a4c3d; font-size:15px; line-height:1.65; padding:0 20px 20px 46px; margin:0;}
+  .qa-a-in p b{color:var(--brown); font-weight:600;}
+  @media(max-width:560px){ .qa-a-in p{padding-left:20px;} }
+
   .btnrow{margin-top:34px; display:flex; gap:12px; flex-wrap:wrap;}
   .btn{font-family:var(--mono); font-size:12px; letter-spacing:.05em; padding:13px 20px; border-radius:2px; cursor:pointer; border:1px solid var(--hairline-2); background:var(--panel); color:var(--brown); transition:all .22s;}
   .btn:hover{border-color:var(--bronze); color:var(--bronze); transform:translateY(-1px);}
@@ -431,7 +449,7 @@
   <p class="lede converge-lede">The developer on the Developer Portal, the treasurer on Access, and the treasurer inside the ERP touch three genuinely different connection points — they never see each other's screen. What they share is what's running underneath: the same payment rails, the same account data, the same core engine.</p>
 
   <div class="diagram">
-    <svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" fill="none">
+    <svg viewBox="0 0 760 448" xmlns="http://www.w3.org/2000/svg" fill="none">
       <!-- converging flow lines (animated toward the engine) -->
       <path class="flowline" d="M120 96 C 190 220 300 300 372 344" stroke="#B0632E" stroke-width="1.8" opacity=".7"/>
       <path class="flowline" d="M380 96 L380 344" stroke="#937A2E" stroke-width="1.8" opacity=".7"/>
@@ -459,16 +477,45 @@
       <text x="640" y="82" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11" letter-spacing="1" fill="#8A7A67">TREASURER · ERP/TMS</text>
 
       <!-- core engine -->
-      <rect x="250" y="344" width="260" height="72" rx="5" fill="#FBF8F3" stroke="#A0662F" stroke-width="1.5"/>
-      <g transform="translate(286,362)" stroke="#A0662F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="228" y="346" width="304" height="90" rx="6" fill="#FBF8F3" stroke="#A0662F" stroke-width="1.5"/>
+      <g transform="translate(363,354)" stroke="#A0662F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="0" y="12" width="26" height="16" rx="2"/><rect x="5" y="4" width="6" height="8" rx="1"/><rect x="14" y="4" width="6" height="8" rx="1"/><path d="M26 17h5l3 3v5h-8"/>
       </g>
-      <text x="406" y="382" text-anchor="middle" font-family="'Newsreader',serif" font-size="19" font-weight="500" fill="#4A3524">J.P. Morgan Payments</text>
-      <text x="406" y="400" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10.5" letter-spacing="1.5" fill="#8A7A67">ONE ENGINE · RAILS · ACCOUNTS · DATA</text>
+      <text x="380" y="408" text-anchor="middle" font-family="'Newsreader',serif" font-size="19" font-weight="500" fill="#4A3524">J.P. Morgan Payments</text>
+      <text x="380" y="425" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10.5" letter-spacing="1.5" fill="#8A7A67">ONE ENGINE · RAILS · ACCOUNTS · DATA</text>
     </svg>
   </div>
 
-  <p class="closing"><b>The pitch to leadership isn't "one platform for everyone."</b> It's "one engine, three front doors" — Access, the Developer Portal, and native ERP/TMS integrations are each purpose-built for how that persona already works, so the client never has to adapt to us. Competitors running siloed banking, API, and integration teams end up building three disconnected products instead of three doors onto one engine.</p>
+  <div class="qa">
+    <div class="eyebrow" style="margin-bottom:20px;">Recap · Three questions to take away</div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        <span class="qn">Q1</span>
+        <span class="qtext">Three products, three audiences — who gets which door?</span>
+        <span class="qtoggle" aria-hidden="true">+</span>
+      </button>
+      <div class="qa-a"><div class="qa-a-in"><p>Developers who build in-house get the <b>Payments Developer Portal</b> and its APIs. Treasurers running the desk get <b>J.P. Morgan Access</b>. Treasurers living in the ERP get native <b>Oracle Fusion and SAP S/4HANA</b> integrations.</p></div></div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        <span class="qn">Q2</span>
+        <span class="qtext">If they're three different products, what's the one message?</span>
+        <span class="qtoggle" aria-hidden="true">+</span>
+      </button>
+      <div class="qa-a"><div class="qa-a-in"><p><b>One engine, three front doors.</b> The same payment rails, account data, and core engine sit underneath all three — only the entry point changes to match how each persona already works.</p></div></div>
+    </div>
+
+    <div class="qa-item">
+      <button class="qa-q" aria-expanded="false">
+        <span class="qn">Q3</span>
+        <span class="qtext">Why does that win?</span>
+        <span class="qtoggle" aria-hidden="true">+</span>
+      </button>
+      <div class="qa-a"><div class="qa-a-in"><p>The client never has to adapt to us. We meet the developer in their codebase, the treasurer in Access, and the controller inside the ERP — one engine reaching all three, on their terms.</p></div></div>
+    </div>
+  </div>
 
   <div class="btnrow">
     <button class="btn primary" onclick="go('hub')">← Start over from the three doors</button>
@@ -539,6 +586,17 @@
   });
   document.querySelectorAll('.laneswitch button').forEach(function(b){
     b.addEventListener('click', function(){ go(b.dataset.path); });
+  });
+
+  // Q&A accordion (single open)
+  var qaItems = document.querySelectorAll('.qa-item');
+  qaItems.forEach(function(item){
+    var btn = item.querySelector('.qa-q');
+    btn.addEventListener('click', function(){
+      var willOpen = !item.classList.contains('open');
+      qaItems.forEach(function(i){ i.classList.remove('open'); i.querySelector('.qa-q').setAttribute('aria-expanded','false'); });
+      if(willOpen){ item.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
   });
 
   // keyboard navigation
